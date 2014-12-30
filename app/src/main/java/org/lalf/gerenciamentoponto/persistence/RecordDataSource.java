@@ -19,8 +19,7 @@ public class RecordDataSource {
     // Database fields
     private SQLiteDatabase database;
     private SQLiteHelper dbHelper;
-    private String[] allColumns = {SQLiteHelper.COLUMN_ID,
-            SQLiteHelper.COLUMN_CHECKDATATIME, SQLiteHelper.COLUMN_CHECKDATATIME};
+    private String[] allColumns = {SQLiteHelper.COLUMN_ID, SQLiteHelper.COLUMN_CHECKDATATIME};
 
 
     public RecordDataSource(Context context) {
@@ -35,11 +34,11 @@ public class RecordDataSource {
         dbHelper.close();
     }
 
-    public Record createRecord(String dataTime, String day) {
+    public Record createRecord(String dataTime) {
         ContentValues values = new ContentValues();
+        System.out.println("createRecord -> " + dataTime);
         values.put(SQLiteHelper.COLUMN_CHECKDATATIME, dataTime);
-        values.put(SQLiteHelper.COLUMN_CHECKDAY, day);
-        long insertId = database.insert(SQLiteHelper.TABLE_RECORDS, null, values);
+        long insertId = database.insert(SQLiteHelper.TABLE_RECORDS, "", values);
         Cursor cursor = database.query(SQLiteHelper.TABLE_RECORDS,
                 allColumns, SQLiteHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, null);
@@ -54,7 +53,7 @@ public class RecordDataSource {
         database.delete(SQLiteHelper.TABLE_RECORDS, SQLiteHelper.COLUMN_ID + " = " + id, null);
     }
 
-    public List<Record> getAllComments() {
+    public List<Record> getAllRecords() {
         List<Record> records = new ArrayList<Record>();
 
         Cursor cursor = database.query(SQLiteHelper.TABLE_RECORDS,
@@ -75,7 +74,6 @@ public class RecordDataSource {
         Record record = new Record();
         record.setId(cursor.getLong(0));
         record.setDataTime(cursor.getString(1));
-        record.setDay(cursor.getString(2));
         return record;
     }
 }

@@ -7,8 +7,6 @@ public class Record {
 
     private long id;
     private String dataTime;
-    private String day;
-
 
     public long getId() {
         return id;
@@ -25,14 +23,5 @@ public class Record {
     public void setDataTime(String dataTime) {
         this.dataTime = dataTime;
     }
-
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
-
 
 }

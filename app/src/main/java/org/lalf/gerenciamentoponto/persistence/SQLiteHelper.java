@@ -13,17 +13,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_RECORDS = "records";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_CHECKDATATIME = "checkdatatime";
-    public static final String COLUMN_CHECKDAY = "checkday";
 
     private static final String DATABASE_NAME = "ponto.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_RECORDS + "("
             + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_CHECKDATATIME + " text not null, "
-            + COLUMN_CHECKDAY + " text not null);";
+            + COLUMN_CHECKDATATIME + " text not null);";
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

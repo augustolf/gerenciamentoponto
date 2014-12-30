@@ -10,7 +10,9 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TimePicker;
 
 import org.lalf.gerenciamentoponto.controller.Controller;
@@ -41,6 +43,11 @@ public class CheckTimeFragment extends Fragment {
                 mDialog.show(mActivity.getFragmentManager(), "TimePickerFragment");
             }
         });
+
+        ListView listView = (ListView) rootView.findViewById(R.id.records);
+        RecordAdapter adapter = new RecordAdapter(getActivity());
+        adapter.updateRecords(mController.getAllRecords());
+        listView.setAdapter(adapter);
 
         return rootView;
     }
