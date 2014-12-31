@@ -70,6 +70,25 @@ public class RecordDataSource {
         return records;
     }
 
+    public List<Record> getRecordsByDay(String day) {
+        List<Record> records = new ArrayList<Record>();
+
+        String[] whereArgs = {day + "%"};
+
+        Cursor cursor = database.query(SQLiteHelper.TABLE_RECORDS,
+                allColumns, SQLiteHelper.COLUMN_CHECKDATATIME + " LIKE ? ", whereArgs, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Record record = cursorToRecord(cursor);
+            records.add(record);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return records;
+    }
+
     private Record cursorToRecord(Cursor cursor) {
         Record record = new Record();
         record.setId(cursor.getLong(0));

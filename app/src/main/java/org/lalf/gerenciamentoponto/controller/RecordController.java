@@ -2,6 +2,7 @@ package org.lalf.gerenciamentoponto.controller;
 
 import android.content.Context;
 
+import org.joda.time.DateTime;
 import org.lalf.gerenciamentoponto.Record;
 import org.lalf.gerenciamentoponto.persistence.RecordDataSource;
 
@@ -32,13 +33,28 @@ public class RecordController implements Controller {
     }
 
     public void insertTimeCheck(int hour, int min) {
-        String day = new SimpleDateFormat("yyyy-MM-dd ").format(new Date());
+        DateTime dt = new DateTime();
         String time = (hour > 9 ? hour : "0" + hour) + ":" +  (min > 9 ? min : "0" + min);
-        System.out.println("DATATIME: " + day + time);
-        recordDataSource.createRecord(day + time);
+        recordDataSource.createRecord(dt.toString("yyyy-MM-dd ") + time);
     }
 
     public List<Record> getAllRecords() {
         return recordDataSource.getAllRecords();
+    }
+
+    public List<Record> getRecordsToDay() {
+        DateTime dt = new DateTime();
+        System.out.println("DATATIME: " + dt.toString("yyyy-MM-dd"));
+        return recordDataSource.getRecordsByDay(dt.toString("yyyy-MM-dd"));
+    }
+
+    public String getSpentTimeToDay() {
+        List<Record> records = getRecordsToDay();
+
+        for (int i = 0; i < records.size(); i++) {
+
+        }
+
+        return null;
     }
 }

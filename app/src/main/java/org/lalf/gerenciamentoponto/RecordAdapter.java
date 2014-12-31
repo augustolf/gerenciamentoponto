@@ -53,7 +53,7 @@ public class RecordAdapter extends BaseAdapter {
         TextView phoneView = ViewHolder.get(convertView, R.id.record);
 
         Record record = (Record) getItem (position);
-        phoneView.setText(record.getDataTime());
+        phoneView.setText(record.getTime());
 
         return convertView;
     }

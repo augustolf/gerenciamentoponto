@@ -20,6 +20,14 @@ public class Record {
         return dataTime;
     }
 
+    public String getTime() {
+        return dataTime.substring(11);
+    }
+
+    public int getYear() {
+        return Integer.valueOf(dataTime.substring(0, 3));
+    }
+
     public void setDataTime(String dataTime) {
         this.dataTime = dataTime;
     }

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
-import org.lalf.gerenciamentoponto.controller.Controller;
-
 import java.util.Calendar;
 
 /**
@@ -17,7 +15,7 @@ import java.util.Calendar;
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 
-    private Controller mController;
+    private OnTimeSetListener mListener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -32,10 +30,14 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        mController.insertTimeCheck(hourOfDay, minute);
+        mListener.OnTimeSetListener(view, hourOfDay, minute);
     }
 
-    public void setController(Controller controller) {
-        mController = controller;
+    public void setOnTimeSetListener(OnTimeSetListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnTimeSetListener {
+        public void OnTimeSetListener(TimePicker view, int hourOfDay, int minute);
     }
 }

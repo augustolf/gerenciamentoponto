@@ -13,4 +13,5 @@ public interface Controller {
     public void close();
     public void insertTimeCheck(int hour, int min);
     public List<Record> getAllRecords();
+    public List<Record> getRecordsToDay();
 }
