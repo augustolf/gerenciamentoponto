@@ -13,10 +13,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeCounter extends CountDownTimer {
 
+    private static final long BASE_TIME = 24*60*60*1000;
+
     private TimeCounterTickListener mListener;
+    private boolean counting = false;
+    private long timeSpent = 0;
+    private long timepaused = 0;
 
     public TimeCounter() {
-        super(8*60*60*1000, 1000);
+        super(BASE_TIME, 1000);
     }
 
     public TimeCounter(long millisInFuture, long countDownInterval) {
@@ -25,14 +30,8 @@ public class TimeCounter extends CountDownTimer {
 
     @Override
     public void onTick(long millisUntilFinished) {
-        System.out.println("millisUntilFinished|: " + millisUntilFinished);
-
-        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
-
-        System.out.println("hms: " + hms);
-        mListener.onTick(hms);
+        long timeSpent = -(millisUntilFinished - BASE_TIME);
+        mListener.onTick(timeToString(timeSpent));
     }
 
     @Override
@@ -41,10 +40,9 @@ public class TimeCounter extends CountDownTimer {
     }
 
     public void updateRecordList(List<Record> records) {
-
         if (records.isEmpty()) {
 
-        } if (records.size() == 1) {
+        } else  if (records.size() == 1) {
             String time = records.get(0).getDataTime();
             Seconds diff = Seconds.secondsBetween(new DateTime(), new DateTime());
         }
@@ -62,6 +60,24 @@ public class TimeCounter extends CountDownTimer {
 
     public interface TimeCounterTickListener {
         public void onTick(String time);
+    }
+
+    public void play() {
+        counting = true;
+    }
+
+    public void pause() {
+        counting = false;
+    }
+
+    public boolean isCounting() {
+        return counting;
+    }
+
+    private String timeToString(long timeSpent) {
+        return String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(timeSpent),
+                TimeUnit.MILLISECONDS.toMinutes(timeSpent) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timeSpent)),
+                TimeUnit.MILLISECONDS.toSeconds(timeSpent) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timeSpent)));
     }
 
 }

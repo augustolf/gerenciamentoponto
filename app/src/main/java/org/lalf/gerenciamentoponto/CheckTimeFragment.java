@@ -69,6 +69,12 @@ public class CheckTimeFragment extends Fragment {
                         }
                     });
                     mTimeCounter.start();
+                } else {
+                    if (mTimeCounter.isCounting()) {
+                        mTimeCounter.pause();
+                    } else {
+                        mTimeCounter.play();
+                    }
                 }
             }
         });
