@@ -2,6 +2,7 @@ package org.lalf.gerenciamentoponto.util;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TimePicker;
 
 /**
@@ -10,7 +11,7 @@ import android.widget.TimePicker;
 public class TimePicker24Hours extends TimePicker implements TimePicker.OnTimeChangedListener {
     @Override
     public void onTimeChanged(TimePicker timePicker, int i, int i2) {
-        System.out.println("ENTROUUUU");
+        Log.d("Luiz", "Time picker onTimeChanged");
     }
 
     public TimePicker24Hours(Context context) {

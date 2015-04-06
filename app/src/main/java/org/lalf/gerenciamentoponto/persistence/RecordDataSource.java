@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import org.lalf.gerenciamentoponto.Record;
+import org.lalf.gerenciamentoponto.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,7 @@ public class RecordDataSource {
         Record record = new Record();
         record.setId(cursor.getLong(0));
         record.setDataTime(cursor.getString(1));
+        record.setDateTime(DateUtil.recordToDateTime(cursor.getString(1)));
         return record;
     }
 }
