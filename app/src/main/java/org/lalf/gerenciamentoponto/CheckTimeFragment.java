@@ -3,7 +3,6 @@ package org.lalf.gerenciamentoponto;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ public class CheckTimeFragment extends Fragment {
     private List<Record> records;
 
     private MyChronometer mChronometer;
-    private int clickCounter = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,40 +48,22 @@ public class CheckTimeFragment extends Fragment {
                 @Override
                 public void OnTimeSetListener(TimePicker view, int hourOfDay, int minute) {
                     mController.insertTimeCheck(hourOfDay, minute);
-                    Log.d("Luiz", hourOfDay + ":" + minute);
                     records = mController.getRecordsToDay();
                     mAdapter.updateRecords(records);
-                    clickCounter++;
                     mChronometer.update(records);
-                    /*mChronometer.setMsElapsed(mController.getSpentTimeToDay());
-                    if (clickCounter % 2 > 0) {
-                        mChronometer.start();
-                    } else {
-                        mChronometer.stop();
-                    }*/
                 }
             });
         }
 
         mChronometer = (MyChronometer) rootView.findViewById(R.id.chronometer);
-        //mChronometer.setFormat("%tH:%tM:%tS");
-
-        int recordCount = mController.getRecordsToDay().size();
-
-        Log.e("Luiz", "Tempo gasto: " + (mController.getSpentTimeToDay()/(60*1000)));
 
         mChronometer.update(records);
-        /*mChronometer.setMsElapsed(mController.getSpentTimeToDay());
-        if (recordCount > 0 && (recordCount % 2 > 0)) {
-            mChronometer.start();
-        }*/
 
         Button btn = (Button) rootView.findViewById(R.id.btn_check);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDialog.show(mActivity.getFragmentManager(), "TimePickerFragment");
-
             }
         });
 
