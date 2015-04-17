@@ -63,21 +63,54 @@ public class MyChronometer extends Chronometer {
     public void update(List<Record> list) {
         records = list;
         int size = records.size();
-        if (size == 1) { // se for o primero
+
+        setBase(getSpentTime());
+        if (size % 2 == 0) {
+            stop();
+        } else {
+            start();
+        }
+
+
+        /*if (size == 1) { // se for o primero
             DateTime dt = records.get(0).getDateTime();
-            dataStarted = SystemClock.elapsedRealtime() + (dt.getMillis() - System.currentTimeMillis());
-            Log.d("Luiz", "Base do Cronometro: " + dt.getYear() + "-" + dt.getMonthOfYear() + "-" + dt.getDayOfMonth() + " " + dt.getHourOfDay() + ":" + dt.getMinuteOfHour() + ":" + dt.getSecondOfMinute() + " millis: " + dataStarted + " " );
-            Log.d("Luiz", "millis: " + dataStarted + " elapsedRealtime: " + SystemClock.elapsedRealtime() + " currentTimeMillis: " + System.currentTimeMillis());
-            setBase(dataStarted);
+            //dataStarted = SystemClock.elapsedRealtime() + (dt.getMillis() - System.currentTimeMillis());
+            //Log.d("Luiz", "Base do Cronometro: " + dt.getYear() + "-" + dt.getMonthOfYear() + "-" + dt.getDayOfMonth() + " " + dt.getHourOfDay() + ":" + dt.getMinuteOfHour() + ":" + dt.getSecondOfMinute() + " millis: " + dataStarted + " " );
+            //Log.d("Luiz", "millis: " + dataStarted + " elapsedRealtime: " + SystemClock.elapsedRealtime() + " currentTimeMillis: " + System.currentTimeMillis());
+            setBase(getDataTimeBase(dt.getMillis()));
             start();
         } else if (size % 2 != 0) { // se não for o primeiro e for impar
             int last = size - 1;
-            dataStarted = dataStarted - (records.get(last).getDateTime().getMillis() - records.get(last-1).getDateTime().getMillis());
-            setBase(dataStarted);
+            //dataStarted = dataStarted - (records.get(last).getDateTime().getMillis() - records.get(last-1).getDateTime().getMillis());
+            setBase(SystemClock.elapsedRealtime() - (records.get(last).getDateTime().getMillis() - records.get(last-1).getDateTime().getMillis()));
             start();
         } else {
             stop();
+        }*/
+
+    }
+
+    private  long getDataTimeBase(long time) {
+        Log.d("Luiz", "getDataTimeBase");
+        long elapsedRealtimeOffset = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+        return time - elapsedRealtimeOffset;
+    }
+
+    private long getSpentTime() {
+        long spentTime = 0;
+        long elapsedTime = SystemClock.elapsedRealtime();
+        int count = 0;
+        while(count < records.size()) {
+            if (count + 1 < records.size()) {
+                spentTime = spentTime + (records.get(count + 1).getDateTime().getMillis() - records.get(count).getDateTime().getMillis());
+            } else {
+                long elapsedRealtimeOffset = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+                elapsedTime = records.get(count).getDateTime().getMillis() - elapsedRealtimeOffset;
+            }
+            count+=2;
         }
+
+        return elapsedTime - spentTime;
 
     }
 }

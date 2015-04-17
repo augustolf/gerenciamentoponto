@@ -66,7 +66,7 @@ public class CheckTimeFragment extends Fragment {
         }
 
         mChronometer = (MyChronometer) rootView.findViewById(R.id.chronometer);
-        mChronometer.setFormat("%tH:%tM:%tS");
+        //mChronometer.setFormat("%tH:%tM:%tS");
 
         int recordCount = mController.getRecordsToDay().size();
 

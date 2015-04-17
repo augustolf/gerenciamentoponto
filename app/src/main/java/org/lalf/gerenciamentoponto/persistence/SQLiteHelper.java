@@ -15,7 +15,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CHECKDATATIME = "checkdatatime";
 
     private static final String DATABASE_NAME = "ponto.db";
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 15;
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
