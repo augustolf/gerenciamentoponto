@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TimePicker;
 
 import org.lalf.gerenciamentoponto.controller.Controller;
+import org.lalf.gerenciamentoponto.controller.WorkingTimeController;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class CheckTimeFragment extends Fragment {
     private Controller mController;
     private RecordAdapter mAdapter;
     private List<Record> records;
+    private WorkingTimeController mWorkingTimeController;
 
     private MyChronometer mChronometer;
 
@@ -66,6 +68,9 @@ public class CheckTimeFragment extends Fragment {
                 mDialog.show(mActivity.getFragmentManager(), "TimePickerFragment");
             }
         });
+
+        mWorkingTimeController = new WorkingTimeController(getActivity(), records);
+        mWorkingTimeController.check();
 
         return rootView;
     }
